@@ -1,0 +1,28 @@
+version: '3'
+services:
+  backend:
+    restart: always
+    env_file:
+      - .env
+    build: backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_started
+    command: sh -c "python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8080"
+    # command: sh -c "python manage.py wait_for_db && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: 'music_room'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: '${DB_USER_PASSWORD}'
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+networks:
+  backend:
+     driver: bridge
