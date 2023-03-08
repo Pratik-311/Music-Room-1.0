@@ -13,7 +13,7 @@ function pauseSong() {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   };
-  fetch("/spotify/pause", requestOptions);
+  fetch("http://0.0.0.0/spotify/pause", requestOptions);
 }
 
 function playSong() {
@@ -21,7 +21,7 @@ function playSong() {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
   };
-  fetch("/spotify/play", requestOptions);
+  fetch("http://0.0.0.0/spotify/play", requestOptions);
 }
 
 function skipSong() {
@@ -29,7 +29,7 @@ function skipSong() {
     method: "POST",
     headers: { "Content-Type": "application/json" },
   };
-  fetch("/spotify/skip", requestOptions);
+  fetch("http://0.0.0.0/spotify/skip", requestOptions);
 }
 
 export default function MusicPlayer(props) {

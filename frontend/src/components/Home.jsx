@@ -29,7 +29,7 @@ export default function Home(props) {
   const [roomCode, setRoomCode] = useState(null);
 
   const updateRoomCode = async () => {
-    fetch("/api/user-in-room")
+    fetch("http://0.0.0.0/api/user-in-room")
       .then((response) => response.json())
       .then((data) => {
         setRoomCode(data.code);

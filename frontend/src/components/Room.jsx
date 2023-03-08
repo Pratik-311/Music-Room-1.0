@@ -23,7 +23,7 @@ export default function Room() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     };
-    fetch("/api/leave-room", requestOptions).then((_response) => {
+    fetch("http://0.0.0.0/api/leave-room", requestOptions).then((_response) => {
       navigate("/");
     });
   }
@@ -36,7 +36,7 @@ export default function Room() {
   }
 
   function getRoomDetails() {
-    fetch("/api/get-room" + "?code=" + roomCode)
+    fetch("http://0.0.0.0/api/get-room" + "?code=" + roomCode)
       .then((response) => {
         if (!response.ok) navigate("/");
         return response.json();
@@ -51,7 +51,7 @@ export default function Room() {
   }
 
   function authenticateSpotify() {
-    fetch("/spotify/is-authenticated")
+    fetch("http://0.0.0.0/spotify/is-authenticated")
       .then((response) => response.json())
       .then((data) => {
         setRoomDetails((prevRoomDetails) => ({
@@ -59,7 +59,7 @@ export default function Room() {
           spotifyAuthenticated: data.status,
         }));
         if (!data.status) {
-          fetch("/spotify/get-auth-url")
+          fetch("http://0.0.0.0/spotify/get-auth-url")
             .then((response) => response.json())
             .then((data) => {
               window.location.replace(data.url);
@@ -69,7 +69,7 @@ export default function Room() {
   }
 
   function getCurrentSong() {
-    fetch("/spotify/current-song")
+    fetch("http://0.0.0.0/spotify/current-song")
       .then((response) => {
         if (!response.ok) return {};
         else {

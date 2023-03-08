@@ -11,10 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
 
-# load_dotenv('../../.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -25,8 +24,9 @@ SECRET_KEY = str(os.environ['SECRET_KEY'])
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ['DEBUG']) == "1"
 
-ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS']
-
+# ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(",")
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', 'backend']
+CORS_ALLOW_ALL_ORIGINS = True
 # SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 # Application definition
@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.ApiConfig',
     'rest_framework',
-    'frontend.apps.FrontendConfig',
+	'corsheaders',
+    'api.apps.ApiConfig',
     'spotify.apps.SpotifyConfig',
 	'utils'
 ]
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -83,12 +84,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'music_room',
         'USER': 'postgres',
-        # 'PASSWORD': 'pass',
         'PASSWORD': os.environ['DB_USER_PASSWORD'],
         'HOST':'db',
         'PORT':'5432',
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -127,6 +125,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+STATIC_ROOT = "static/"
 STATIC_URL = 'static/'
 
 # Default primary key field type

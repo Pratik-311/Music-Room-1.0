@@ -72,11 +72,10 @@ function updateGradient() {
   }
 }
 
-setInterval(updateGradient, 10);
-
-const root = ReactDOM.createRoot(document.getElementById("app"));
-root.render(
-  <div className="center">
-    <App />
-  </div>
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <div className="center">
+      <App />
+    </div>
+  </React.StrictMode>
 );

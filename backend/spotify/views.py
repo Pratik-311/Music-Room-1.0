@@ -7,10 +7,10 @@ from .util import *
 from api.models import Room
 from .models import Vote
 
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
 
-load_dotenv()
+# load_dotenv()
 
 class AuthURL(APIView):
     def get(self, request, fornat=None):
@@ -19,8 +19,8 @@ class AuthURL(APIView):
         url = Request('GET', 'https://accounts.spotify.com/authorize', params={
             'scope': scopes,
             'response_type': 'code',
-            'redirect_uri': str(os.getenv('REDIRECT_URI')),
-            'client_id': str(os.getenv('CLIENT_ID'))
+            'redirect_uri': str(os.environ['REDIRECT_URI']),
+            'client_id': str(os.environ['CLIENT_ID'])
         }).prepare().url
 
         return Response({'url': url}, status=status.HTTP_200_OK)
@@ -33,9 +33,9 @@ def spotify_callback(request, format=None):
     response = post('https://accounts.spotify.com/api/token', data={
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': str(os.getenv('REDIRECT_URI')),
-        'client_id': str(os.getenv('CLIENT_ID')),
-        'client_secret': str(os.getenv('CLIENT_SECRET'))
+        'redirect_uri': str(os.environ['REDIRECT_URI']),
+        'client_id': str(os.environ['CLIENT_ID']),
+        'client_secret': str(os.environ['CLIENT_SECRET'])
     }).json()
 
     access_token = response.get('access_token')
@@ -50,7 +50,7 @@ def spotify_callback(request, format=None):
     update_or_create_user_tokens(
         request.session.session_key, access_token, token_type, expires_in, refresh_token)
 
-    return redirect('frontend:')
+    return redirect('http://0.0.0.0/')
 
 
 class IsAuthenticated(APIView):

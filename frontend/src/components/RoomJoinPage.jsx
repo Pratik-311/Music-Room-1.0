@@ -24,7 +24,7 @@ export default function RoomJoinPage(props) {
         code: joinRoomDetails.roomCode,
       }),
     };
-    fetch("/api/join-room", requestOptions)
+    fetch("http://0.0.0.0/api/join-room", requestOptions)
       .then((response) => {
         if (response.ok) {
           navigate(`/room/${joinRoomDetails.roomCode}`);

@@ -46,7 +46,7 @@ export default function CreateRoomPage({
         guest_can_pause: roomCreationDetails.guestCanPause,
       }),
     };
-    fetch("/api/create-room", requestOptions)
+    fetch("http://0.0.0.0/api/create-room", requestOptions)
       .then((response) => response.json())
       .then((data) => navigate(`/room/${data.code}`));
   }
@@ -61,7 +61,7 @@ export default function CreateRoomPage({
         code: roomCode,
       }),
     };
-    fetch("/api/update-room", requestOptions).then((response) => {
+    fetch("http://0.0.0.0/api/update-room", requestOptions).then((response) => {
       if (response.ok) {
         setRoomCreationDetails((prevRoomCreationDetails) => ({
           ...prevRoomCreationDetails,
